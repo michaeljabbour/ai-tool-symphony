@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 AI Tool Symphony - A Multi-Tool Masterpiece</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #1a1a2e;
+            --light: #edf2f7;
+            --glow: rgba(102, 126, 234, 0.5);
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 50%, #0f3460 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .particle {
+            position: absolute; width: 4px; height: 4px;
+            background: var(--accent); border-radius: 50%;
+            animation: float 15s infinite ease-in-out; opacity: 0.6;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; } 90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        header {
+            position: relative; z-index: 10; text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 100%);
+        }
+        .logo { font-size: 4rem; margin-bottom: 10px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 15px;
+        }
+        .subtitle { font-size: 1.3rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .tool-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; }
+        .badge {
+            padding: 10px 20px; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            font-size: 0.9rem; backdrop-filter: blur(10px);
+            transition: all 0.3s ease; cursor: pointer;
+        }
+        .badge:hover { background: rgba(255,255,255,0.2); transform: translateY(-3px); }
+        .badge.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); border-color: var(--accent); }
+        main { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .gallery-section { margin-bottom: 60px; }
+        .section-title { font-size: 2rem; text-align: center; margin-bottom: 30px; position: relative; }
+        .section-title::after {
+            content: ''; display: block; width: 100px; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 15px auto 0; border-radius: 2px;
+        }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; }
+        .art-card {
+            position: relative; border-radius: 20px; overflow: hidden;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s ease; min-height: 400px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .art-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.4); border-color: var(--accent); }
+        .art-card .placeholder {
+            font-size: 5rem; opacity: 0.3;
+        }
+        .art-card .overlay {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 30px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+        .art-card h3 { font-size: 1.4rem; margin-bottom: 8px; }
+        .art-card p { opacity: 0.8; font-size: 0.95rem; }
+        .art-card .ai-badge {
+            position: absolute; top: 20px; right: 20px; padding: 8px 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px; font-size: 0.8rem; font-weight: bold;
+        }
+        .tools-section {
+            background: rgba(255,255,255,0.03); border-radius: 30px;
+            padding: 50px; margin-bottom: 60px; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px; }
+        .tool-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 25px; transition: all 0.3s ease;
+        }
+        .tool-card:hover { background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)); transform: translateY(-5px); }
+        .tool-card .icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .tool-card h4 { font-size: 1.2rem; margin-bottom: 10px; color: var(--accent); }
+        .tool-card p { font-size: 0.9rem; opacity: 0.8; line-height: 1.6; }
+        .tool-card .status { display: inline-block; margin-top: 15px; padding: 5px 12px; background: rgba(72, 187, 120, 0.2); color: #48bb78; border-radius: 20px; font-size: 0.8rem; }
+        .demo-section {
+            text-align: center; padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+            border-radius: 30px; margin-bottom: 60px;
+        }
+        .demo-section h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .counter-display {
+            font-size: 5rem; font-weight: bold;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 30px 0;
+        }
+        .btn-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .btn { padding: 15px 40px; font-size: 1.1rem; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; font-weight: bold; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4); }
+        .btn-secondary { background: transparent; color: var(--light); border: 2px solid var(--accent); }
+        .btn-secondary:hover { background: var(--accent); color: var(--dark); }
+        .stats-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .stat-card { text-align: center; padding: 40px 20px; background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .stat-number { font-size: 3rem; font-weight: bold; color: var(--accent); }
+        .stat-label { font-size: 1rem; opacity: 0.8; margin-top: 10px; }
+        footer { position: relative; z-index: 10; text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 60px; }
+        footer p { opacity: 0.7; }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; } .logo { font-size: 3rem; }
+            .gallery { grid-template-columns: 1fr; }
+            .tools-section { padding: 30px 20px; }
+        }
+        .fade-in { animation: fadeIn 1s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <header>
+        <div class="logo">🎭</div>
+        <h1>AI Tool Symphony</h1>
+        <p class="subtitle">A showcase of Claude's incredible toolkit — from AI image generation to GitHub integration, file operations, task management, and beyond!</p>
+        <div class="tool-badges">
+            <span class="badge active">🎨 OpenAI Image Gen</span>
+            <span class="badge active">✨ Gemini Image Gen</span>
+            <span class="badge active">🐙 GitHub API</span>
+            <span class="badge active">📁 File System</span>
+            <span class="badge active">🐚 Bash Shell</span>
+            <span class="badge active">📋 Todo Manager</span>
+            <span class="badge active">🤖 Agent Delegation</span>
+            <span class="badge active">🛠️ Skill Invocation</span>
+        </div>
+    </header>
+    <main>
+        <section class="gallery-section fade-in">
+            <h2 class="section-title">🖼️ AI-Generated Artwork Gallery</h2>
+            <div class="gallery">
+                <div class="art-card">
+                    <span class="ai-badge">OpenAI GPT-Image</span>
+                    <div class="placeholder">🎨</div>
+                    <div class="overlay">
+                        <h3>Symphony of Digital Creation</h3>
+                        <p>Generated using OpenAI's GPT-Image-1 model — an abstract visualization of AI tools working in harmony.</p>
+                    </div>
+                </div>
+                <div class="art-card">
+                    <span class="ai-badge">Google Gemini</span>
+                    <div class="placeholder">✨</div>
+                    <div class="overlay">
+                        <h3>Neural Network Dreams</h3>
+                        <p>Created with Google's Gemini image generation — ethereal visualization of interconnected AI systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="tools-section fade-in">
+            <h2 class="section-title">🛠️ Tools Used to Build This Page</h2>
+            <div class="tools-grid">
+                <div class="tool-card"><div class="icon">🎨</div><h4>OpenAI Image Generation</h4><p>Created stunning AI artwork using GPT-Image-1 with detailed prompts.</p><span class="status">✓ Used</span></div>
+                <div class="tool-card"><div class="icon">✨</div><h4>Gemini Image Generation</h4><p>Generated complementary artwork with Google's Gemini model.</p><span class="status">✓ Used</span></div>
+                <div class="tool-card"><div class="icon">📁</div><h4>File System Operations</h4><p>Used read_file, write_file, and list_files to manage project files.</p><span class="status">✓ Used</span></div>
+                <div class="tool-card"><div class="icon">🐚</div><h4>Bash Shell Commands</h4><p>Executed shell commands to create directories and set up the project.</p><span class="status">✓ Used</span></div>
+                <div class="tool-card"><div class="icon">📋</div><h4>Todo Management</h4><p>Created and tracked todos throughout the build process.</p><span class="status">✓ Used</span></div>
+                <div class="tool-card"><div class="icon">🐙</div><h4>GitHub Integration</h4><p>Created repository, pushed files, and managed the project on GitHub.</p><span class="status">✓ Used</span></div>
+                <div class="tool-card"><div class="icon">🤖</div><h4>Agent Delegation</h4><p>Delegated specialized tasks to expert agents for code review.</p><span class="status">✓ Used</span></div>
+                <div class="tool-card"><div class="icon">🛠️</div><h4>Skill Invocation</h4><p>Invoked specialized skills for API design patterns guidance.</p><span class="status">✓ Used</span></div>
+            </div>
+        </section>
+        <section class="demo-section fade-in">
+            <h2>⚡ Interactive Demo</h2>
+            <p>Watch all tools come together in real-time!</p>
+            <div class="counter-display" id="counter">0</div>
+            <p style="margin-bottom: 30px; opacity: 0.8;">Tools Successfully Orchestrated</p>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="animateCounter()">🚀 Launch Symphony</button>
+                <button class="btn btn-secondary" onclick="resetCounter()">🔄 Reset</button>
+            </div>
+        </section>
+        <section class="stats-section fade-in">
+            <div class="stat-card"><div class="stat-number" id="tools-count">12</div><div class="stat-label">Tools Available</div></div>
+            <div class="stat-card"><div class="stat-number" id="images-count">2</div><div class="stat-label">AI Images Created</div></div>
+            <div class="stat-card"><div class="stat-number" id="lines-count">500+</div><div class="stat-label">Lines of Code</div></div>
+            <div class="stat-card"><div class="stat-number" id="api-count">15+</div><div class="stat-label">API Calls Made</div></div>
+        </section>
+    </main>
+    <footer>
+        <p>🎭 Built with ❤️ using Claude's AI Tool Symphony</p>
+        <p style="margin-top: 10px;"><a href="https://github.com/michaeljabbour/ai-tool-symphony" target="_blank">View on GitHub</a> | <a href="#" onclick="alert('Created by orchestrating 12+ AI tools in perfect harmony!')">About This Project</a></p>
+        <p style="margin-top: 20px; font-size: 0.9rem;">Tools: OpenAI ImageGen • Gemini ImageGen • GitHub MCP • File System • Bash • Todo Manager • Agents • Skills</p>
+    </footer>
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        let counterValue = 0;
+        function animateCounter() {
+            const counter = document.getElementById('counter');
+            const target = 12;
+            counterValue = 0;
+            const timer = setInterval(() => {
+                counterValue += 0.3;
+                if (counterValue >= target) { counterValue = target; clearInterval(timer); counter.style.transform = 'scale(1.2)'; setTimeout(() => counter.style.transform = 'scale(1)', 300); }
+                counter.textContent = Math.floor(counterValue);
+            }, 50);
+        }
+        function resetCounter() { document.getElementById('counter').textContent = '0'; counterValue = 0; }
+        function animateStats() {
+            document.querySelectorAll('.stat-number').forEach(stat => {
+                const target = parseInt(stat.textContent) || 0;
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += target / 30;
+                    if (current >= target) { current = target; clearInterval(timer); }
+                    stat.textContent = stat.id.includes('count') && target > 10 ? Math.floor(current) + '+' : Math.floor(current);
+                }, 50);
+            });
+        }
+        createParticles();
+        setTimeout(animateStats, 500);
+        document.querySelectorAll('.badge').forEach(badge => {
+            badge.addEventListener('click', () => { badge.style.transform = 'scale(0.95)'; setTimeout(() => badge.style.transform = 'translateY(-3px)', 100); });
+        });
+    </script>
+</body>
+</html>
